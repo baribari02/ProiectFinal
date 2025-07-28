@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace proiectFinal
+namespace FinalProj1._0
 {
-    internal class Product
+    public class Product
     {
         public int ID { get; set; }
         public string Name { get; set; }

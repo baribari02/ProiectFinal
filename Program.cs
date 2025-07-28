@@ -1,94 +1,41 @@
-﻿namespace proiectFinal
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace FinalProj1._0
 {
     internal class Program
     {
+       
+        
         static void Main(string[] args)
         {
-            Product product1 = new Product(1, "Laptop", "High performance laptop", 1500.00, 10);
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
+
+            Console.WriteLine("Welcome to the Shopping Cart Application!");
+            /*Console.WriteLine();
+            Product product1 = new Product(1, "Laptop", "High performance laptop", 999.99, 10);
+            Product product2 = new Product(2, "Smartphone", "Latest model smartphone", 799.99, 20);
+            Product product3 = new Product(3, "Headphones", "Noise-cancelling headphones", 199.99, 15);
+            CartItem cartItem1 = new CartItem(product1, 2);
+            CartItem cartItem2 = new CartItem(product2, 1);
+            CartItem cartItem3 = new CartItem(product3, 3);
+            Console.WriteLine("Cart Items:");
             Console.WriteLine(product1);
+            Console.WriteLine(cartItem1);
+            Console.WriteLine(cartItem2);
+            Console.WriteLine(cartItem3);
+            User user = new User();
+            user.ID = 1;
+            Console.Write("Input name: ");
+            user.Name = Console.ReadLine();
+            Console.Write("Input email: ");
+            user.Email =Console.ReadLine();
+            Console.Write("Input password: ");
+            user.Password = Console.ReadLine();*/
 
-            var userService = new UserManager();
-            userService.LoadUsers();
-
-            while (true)
-            {
-                Console.WriteLine("\n1. SignUp");
-                Console.WriteLine("2. Login");
-                Console.WriteLine("3. List Users");
-                Console.WriteLine("0. Exit");
-                Console.Write("Choose: ");
-                var opt = Console.ReadLine();
-
-                switch (opt)
-                {
-                    case "1":
-                        Console.Write("Name: ");
-                        var name = Console.ReadLine();
-                        string email;
-                        do
-                        {
-                            Console.Write("Email: ");
-                            email = Console.ReadLine();
-                            if (!UserManager.IsValidEmail(email))
-                                Console.WriteLine("Email invalid! Încearcă din nou.");
-                        } while (!UserManager.IsValidEmail(email));
-
-                        string pass, confirm;
-                        do
-                        {
-                            Console.Write("Password: ");
-                            pass = Console.ReadLine();
-                            Console.Write("Confirm: ");
-                            confirm = Console.ReadLine();
-                            if (pass != confirm)
-                                Console.WriteLine("Passwords do not match!");
-                        } while (pass != confirm);
-                        try
-                        {
-                            userService.SignUp(name, email, pass);
-                            Console.WriteLine("Registered successfully!");
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine("Error: " + ex.Message);
-                        }
-                        break;
-
-                    case "2":
-                        while (true)
-                        {
-                            Console.Write("Email (sau Enter for back): ");
-                            email = Console.ReadLine();
-                            if (string.IsNullOrWhiteSpace(email))
-                                break;
-                            Console.Write("Password: ");
-                            pass = Console.ReadLine();
-                            var user = userService.Login(email, pass);
-                            if (user != null)
-                            {
-                                Console.WriteLine($"Welcome, {user.Name}!");
-                                break;
-                            }
-                            else
-                            {
-                                Console.WriteLine("Email or password is incorrect! Try Again.");
-                            }
-                        }
-                        break;
-
-                    case "3":
-                        userService.ListUsers();
-                        break;
-
-                    case "0":
-                        return;
-
-                    default:
-                        Console.WriteLine("Invalid option!");
-                        break;
-
-                }
-            }
         }
     }
 }
