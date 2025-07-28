@@ -1,59 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Proiect_Final
+namespace FinalProj1._0
 {
     internal class Program
     {
+       
+        
         static void Main(string[] args)
         {
-            
-            IDataStorage storage = new FileDataStorage();
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-            List<Product> products = storage.LoadProducts("products.txt");
+            Console.WriteLine("Welcome to the Shopping Cart Application!");
+            /*Console.WriteLine();
+            Product product1 = new Product(1, "Laptop", "High performance laptop", 999.99, 10);
+            Product product2 = new Product(2, "Smartphone", "Latest model smartphone", 799.99, 20);
+            Product product3 = new Product(3, "Headphones", "Noise-cancelling headphones", 199.99, 15);
+            CartItem cartItem1 = new CartItem(product1, 2);
+            CartItem cartItem2 = new CartItem(product2, 1);
+            CartItem cartItem3 = new CartItem(product3, 3);
+            Console.WriteLine("Cart Items:");
+            Console.WriteLine(product1);
+            Console.WriteLine(cartItem1);
+            Console.WriteLine(cartItem2);
+            Console.WriteLine(cartItem3);
+            User user = new User();
+            user.ID = 1;
+            Console.Write("Input name: ");
+            user.Name = Console.ReadLine();
+            Console.Write("Input email: ");
+            user.Email =Console.ReadLine();
+            Console.Write("Input password: ");
+            user.Password = Console.ReadLine();*/
 
-            int nextProductId = products.Count > 0 ? products[^1].ID + 1 : 1;
-
-            ProductManager productManager = new ProductManager(products, storage, "products.txt", nextProductId);
-
-            while (true)
-            {
-                Console.WriteLine("\n--- Menu Product ---");
-                Console.WriteLine("1. Add Product");
-                Console.WriteLine("2. Modify Product");
-                Console.WriteLine("3. Delete Product");
-                Console.WriteLine("4. List Product");
-                Console.WriteLine("5. Search by name");
-                Console.WriteLine("0. Exit.");
-                Console.Write("Choose product: ");
-
-                string opt = Console.ReadLine();
-
-                switch (opt)
-                {
-                    case "1":
-                        productManager.AddProduct();
-                        break;
-                    case "2":
-                        productManager.EditProduct();
-                        break;
-                    case "3":
-                        productManager.DeleteProduct();
-                        break;
-                    case "4":
-                        productManager.ListProducts();
-                        break;
-                    case "5":
-                        productManager.SearchProducts();
-                        break;
-                    case "0":
-                        Console.WriteLine("See you later!");
-                        return;
-                    default:
-                        Console.WriteLine("Invalid option.");
-                        break;
-                }
-            }
         }
     }
 }
