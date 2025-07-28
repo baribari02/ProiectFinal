@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FinalProj1._0
+namespace proiectFinal
 {
     internal class User
     {
