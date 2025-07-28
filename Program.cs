@@ -1,92 +1,57 @@
-﻿namespace proiectFinal
+﻿using System;
+using System.Collections.Generic;
+
+namespace Proiect_Final
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            Product product1 = new Product(1, "Laptop", "High performance laptop", 1500.00, 10);
-            Console.WriteLine(product1);
+            
+            IDataStorage storage = new FileDataStorage();
 
-            var userService = new UserManager();
-            userService.LoadUsers();
+            List<Product> products = storage.LoadProducts("products.txt");
+
+            int nextProductId = products.Count > 0 ? products[^1].ID + 1 : 1;
+
+            ProductManager productManager = new ProductManager(products, storage, "products.txt", nextProductId);
 
             while (true)
             {
-                Console.WriteLine("\n1. SignUp");
-                Console.WriteLine("2. Login");
-                Console.WriteLine("3. List Users");
-                Console.WriteLine("0. Exit");
-                Console.Write("Choose: ");
-                var opt = Console.ReadLine();
+                Console.WriteLine("\n--- Menu Product ---");
+                Console.WriteLine("1. Add Product");
+                Console.WriteLine("2. Modify Product");
+                Console.WriteLine("3. Delete Product");
+                Console.WriteLine("4. List Product");
+                Console.WriteLine("5. Search by name");
+                Console.WriteLine("0. Exit.");
+                Console.Write("Choose product: ");
+
+                string opt = Console.ReadLine();
 
                 switch (opt)
                 {
                     case "1":
-                        Console.Write("Name: ");
-                        var name = Console.ReadLine();
-                        string email;
-                        do
-                        {
-                            Console.Write("Email: ");
-                            email = Console.ReadLine();
-                            if (!UserManager.IsValidEmail(email))
-                                Console.WriteLine("Email invalid! Încearcă din nou.");
-                        } while (!UserManager.IsValidEmail(email));
-
-                        string pass, confirm;
-                        do
-                        {
-                            Console.Write("Password: ");
-                            pass = Console.ReadLine();
-                            Console.Write("Confirm: ");
-                            confirm = Console.ReadLine();
-                            if (pass != confirm)
-                                Console.WriteLine("Passwords do not match!");
-                        } while (pass != confirm);
-                        try
-                        {
-                            userService.SignUp(name, email, pass);
-                            Console.WriteLine("Registered successfully!");
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine("Error: " + ex.Message);
-                        }
+                        productManager.AddProduct();
                         break;
-
                     case "2":
-                        while (true)
-                        {
-                            Console.Write("Email (sau Enter for back): ");
-                            email = Console.ReadLine();
-                            if (string.IsNullOrWhiteSpace(email))
-                                break;
-                            Console.Write("Password: ");
-                            pass = Console.ReadLine();
-                            var user = userService.Login(email, pass);
-                            if (user != null)
-                            {
-                                Console.WriteLine($"Welcome, {user.Name}!");
-                                break;
-                            }
-                            else
-                            {
-                                Console.WriteLine("Email or password is incorrect! Try Again.");
-                            }
-                        }
+                        productManager.EditProduct();
                         break;
-
                     case "3":
-                        userService.ListUsers();
+                        productManager.DeleteProduct();
                         break;
-
+                    case "4":
+                        productManager.ListProducts();
+                        break;
+                    case "5":
+                        productManager.SearchProducts();
+                        break;
                     case "0":
+                        Console.WriteLine("See you later!");
                         return;
-
                     default:
-                        Console.WriteLine("Invalid option!");
+                        Console.WriteLine("Invalid option.");
                         break;
-
                 }
             }
         }
